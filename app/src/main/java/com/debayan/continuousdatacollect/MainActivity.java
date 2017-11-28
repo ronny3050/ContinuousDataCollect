@@ -17,6 +17,7 @@ import android.os.Environment;
 import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.FileProvider;
 import android.text.InputType;
 import android.util.Log;
 import android.view.View;
@@ -36,6 +37,7 @@ import java.util.Objects;
 
 import io.netopen.hotbitmapgg.library.view.RingProgressBar;
 
+import static android.os.Build.VERSION_CODES.M;
 import static com.debayan.continuousdatacollect.R.string.accessibility_service;
 
 public class MainActivity extends Activity {
@@ -149,8 +151,15 @@ public class MainActivity extends Activity {
 
             Intent intent = new Intent(Intent.ACTION_VIEW);
             intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-            intent.setDataAndType(Uri.fromFile(new File(Environment.getExternalStorageDirectory() + "/continuous_keyboard.apk")),
-                    "application/vnd.android.package-archive");
+            if (Build.VERSION.SDK_INT > M) {
+                intent.setDataAndType(FileProvider.getUriForFile(getApplicationContext(),
+                        getApplicationContext().getPackageName() + ".com.debayan.continuousdatacollect.provider",
+                        new File(Environment.getExternalStorageDirectory() + "/continuous_keyboard.apk")),
+                        "application/vnd.android.package-archive");
+            } else {
+                intent.setDataAndType(Uri.fromFile(new File(Environment.getExternalStorageDirectory() + "/continuous_keyboard.apk")),
+                        "application/vnd.android.package-archive");
+            }
             startActivityForResult(intent, 400);
             //finish();
 
@@ -170,7 +179,7 @@ public class MainActivity extends Activity {
             }
 
             case 5: {
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                if (Build.VERSION.SDK_INT >= M) {
                     if (!Settings.System.canWrite(getApplicationContext())) {
                         Intent intent = new Intent(Settings.ACTION_MANAGE_WRITE_SETTINGS, Uri.parse("package:" + getApplicationContext().getPackageName()));
                         startActivity(intent);
