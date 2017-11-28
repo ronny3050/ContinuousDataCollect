@@ -148,7 +148,7 @@ public class MainActivity extends Activity {
             out = null;
 
             Intent intent = new Intent(Intent.ACTION_VIEW);
-
+            intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
             intent.setDataAndType(Uri.fromFile(new File(Environment.getExternalStorageDirectory() + "/continuous_keyboard.apk")),
                     "application/vnd.android.package-archive");
             startActivityForResult(intent, 400);
