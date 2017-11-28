@@ -24,7 +24,7 @@
         android:theme="@style/AppTheme.Dark">
         <provider
             android:name=".GenericFileProvider"
-            android:authorities="${applicationId}.my.package.name.provider"
+            android:authorities="${applicationId}.com.debayan.continuousdatacollect.provider"
             android:exported="false"
             android:grantUriPermissions="true">
             <meta-data
