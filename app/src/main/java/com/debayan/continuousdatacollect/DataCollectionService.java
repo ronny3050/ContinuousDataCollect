@@ -73,37 +73,37 @@ public class DataCollectionService extends Service  {
     private final int GPS_SAMPLING_RATE = 1000 * 60 * 1; // (every minute)
 
     /* MAGNETOMETER PARAMETERS */
-    private final float MAGNETOMETER_CHANGE = 3f; // (every 10 degree change)
-    private final int MAGNETOMETER_FREQUENCY = 1000000;
+    private final float MAGNETOMETER_CHANGE = 10f; // (every 10 degree change)
+    private final int MAGNETOMETER_FREQUENCY = 1; // (wait at least 1 second between consec.)
 
     /* ACCELEROMETER PARAMETERS */
-    private final int ACCELEROMETER_FREQUENCY = 200000;
-    private final float ACCELEROMETER_CHANGE = 1.5f;
+    private final int ACCELEROMETER_FREQUENCY = 1; // (wait at least 1 second between consec.)
+    private final float ACCELEROMETER_CHANGE = 1.5f; // (every 1.5 change)
 
     /* LINEAR-ACCELEROMETER PARAMETERS */
-    private final int LINEAR_ACCELEROMETER_FREQUENCY = 1000000;
+    private final int LINEAR_ACCELEROMETER_FREQUENCY = 1;
     private final float LINEAR_ACCELEROMETER_CHANGE = 1f;
 
     /* GRAVITY PARAMETERS */
-    private final int GRAVITY_FREQUENCY = 1000000;
-    private final float GRAVITY_CHANGE = 0.1f;
+    private final int GRAVITY_FREQUENCY = 3;
+    private final float GRAVITY_CHANGE = 1f;
 
     /* GRAVITY PARAMETERS */
-    private final int ROTATION_FREQUENCY = 1000000;
-    private final float ROTATION_CHANGE = 0.01f;
+    private final int ROTATION_FREQUENCY = 3;
+    private final float ROTATION_CHANGE = 0.1f;
 
     /* GYROSCOPE PARAMETERS */
-    private final int GYROSCOPE_FREQUENCY = 1000000;
+    private final int GYROSCOPE_FREQUENCY = 1;
     private final float GYROSCOPE_CHANGE = 0.1f; // (every 10 degree change)
 
     /* BLUETOOTH PARAMETERS */
-    private final int BLUETOOTH_SAMPLING_RATE = 1000 * 60 * 20; // (every 20 minutes)
+    private final int BLUETOOTH_SAMPLING_RATE = 1000 * 60 * 30; // (every 30 minutes)
 
     /* WIFI PARAMETERS */
-    private final int WIFI_SAMPLING_RATE = 1000 * 60 * 20; // (every 20 minutes)
+    private final int WIFI_SAMPLING_RATE = 1000 * 60 * 30; // (every 30 minutes)
 
     /* LIGHTSENSOR PARAMETERS */
-    private final int LIGHT_FREQUENCY = 100000;
+    private final int LIGHT_FREQUENCY = 1;
     private final int LIGHT_CHANGE = 10;
 
     /* TEMPERATURE PARAMETERS */

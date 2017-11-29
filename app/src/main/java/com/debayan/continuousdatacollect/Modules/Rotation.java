@@ -45,7 +45,7 @@ public class Rotation {
         @Override
         public void onSensorChanged(SensorEvent event) {
             if (event.sensor.getType()==Sensor.TYPE_ROTATION_VECTOR){
-                if(System.currentTimeMillis() - previousTimestamp > freq / 10000) {
+                if( (System.currentTimeMillis() / 1000 - previousTimestamp) > freq) {
                     float ax = event.values[0];
                     float ay = event.values[1];
                     float az = event.values[2];
@@ -53,7 +53,7 @@ public class Rotation {
                             Math.abs(previousValues[1] - ay) > change ||
                             Math.abs(previousValues[2] - az) > change) {
                         previousValues = new Float[]{event.values[0], event.values[1], event.values[2]};
-                        previousTimestamp = System.currentTimeMillis();
+                        previousTimestamp = System.currentTimeMillis() / 1000;
                         JSONObject accelerometerTrace = new JSONObject();
                         try {
                             accelerometerTrace.put("X", ax);

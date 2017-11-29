@@ -59,12 +59,12 @@ public class Gravity {
 
         @Override
         public void onSensorChanged(SensorEvent event) {
-            if (System.currentTimeMillis() - previousTimestamp > freq / 1000) {
+            if ( (System.currentTimeMillis() / 1000 - previousTimestamp) > freq) {
                 if(     Math.abs(previousValues[0] - event.values[0]) > change ||
                         Math.abs(previousValues[1] - event.values[1]) > change ||
                         Math.abs(previousValues[2] - event.values[2]) > change ) {
                     previousValues = new Float[]{event.values[0], event.values[1], event.values[2]};
-                    previousTimestamp = System.currentTimeMillis();
+                    previousTimestamp = System.currentTimeMillis() / 1000;
                     JSONObject gravityTrace = new JSONObject();
                     try {
                         gravityTrace.put("X", event.values[0]);

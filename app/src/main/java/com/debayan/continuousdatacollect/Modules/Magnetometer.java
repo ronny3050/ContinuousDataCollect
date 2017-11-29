@@ -53,14 +53,14 @@ public class Magnetometer {
                 float ax = event.values[0];
                 float ay = event.values[1];
                 float az = event.values[2];
-                if (System.currentTimeMillis() - previousTimestamp > freq / 1000) {
+                if ( (System.currentTimeMillis() / 1000 - previousTimestamp) > freq) {
                     if (Math.abs(previousX - ax) > change ||
                             Math.abs(previousY - ay) > change ||
                             Math.abs(previousZ - az) > change) {
                         previousX = ax;
                         previousY = ay;
                         previousZ = az;
-                        previousTimestamp = System.currentTimeMillis();
+                        previousTimestamp = System.currentTimeMillis()/1000;
                         JSONObject magnetometerTrace = new JSONObject();
                         try {
                             magnetometerTrace.put("X", ax);

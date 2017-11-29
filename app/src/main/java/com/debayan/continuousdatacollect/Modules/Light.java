@@ -5,7 +5,6 @@ import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
-import android.os.SystemClock;
 import android.util.Log;
 
 import com.debayan.continuousdatacollect.Utils.FileWriter;
@@ -50,15 +49,18 @@ public class Light {
             if(event.sensor.getType() == Sensor.TYPE_LIGHT){
                 int light = (int) event.values[0];
                 if (Math.abs(prev - light) > change) {
-                    if( ((int)SystemClock.elapsedRealtime() - time) > freq / 1000) {
-                        time =  SystemClock.elapsedRealtime();
+                    long now = System.currentTimeMillis() / (long)1000;
+
+                    if( (now- time) > freq) {
+
                         prev = light;
                         JSONObject lightTrace = new JSONObject();
                         try {
                             lightTrace.put("Value", light);
                             lightTrace.put("Acc", event.accuracy);
                             lightTrace.put("Timestamp", System.currentTimeMillis() / 1000);
-                            Log.i("CHANGE", "LIGHT " + lightTrace);
+                            Log.i("CHANGE", "LIGHT " + lightTrace + " old " + time + " now " + now + " freq " + freq);
+                            time =  System.currentTimeMillis() / (long)1000;
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }

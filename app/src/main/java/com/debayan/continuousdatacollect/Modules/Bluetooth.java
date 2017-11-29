@@ -17,8 +17,6 @@ import org.json.JSONObject;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
-import java.util.Timer;
-import java.util.TimerTask;
 
 import static android.bluetooth.BluetoothAdapter.ACTION_DISCOVERY_FINISHED;
 
@@ -43,7 +41,7 @@ public class Bluetooth {
         return true;
     }
 
-    public void initialize(final Context context, String fp, FileWriter fw, int BLUETOOTH_SAMPLING_RATE) {
+    public void initialize(final Context context, String fp, FileWriter fw, final int BLUETOOTH_SAMPLING_RATE) {
 
         fileWriter = fw;
         filePath = fp;
@@ -55,26 +53,23 @@ public class Bluetooth {
         context.registerReceiver(mReceiver2, filter2);
         final BluetoothAdapter bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
         final Handler handler = new Handler();
-        Timer timer = new Timer();
-        TimerTask doAsynchronousTask = new TimerTask() {
-            @Override
-            public void run() {
-                handler.post(new Runnable() {
+
+        final Runnable runnable = new Runnable() {
                     @SuppressWarnings("unchecked")
                     public void run() {
                         try {
                             Log.i("CHANGE", "STARTED BLUETOOTH DISCOVERY!!");
                             setBluetooth(true);
                             bluetoothAdapter.startDiscovery();
+                            handler.postDelayed(this, BLUETOOTH_SAMPLING_RATE);
                         }
                         catch (Exception e) {
                             // TODO Auto-generated catch block
                         }
                     }
-                });
-            }
-        };
-        timer.schedule(doAsynchronousTask, 0, BLUETOOTH_SAMPLING_RATE);
+                };
+        handler.postDelayed(runnable, BLUETOOTH_SAMPLING_RATE);
+
     }
 
     private final  BroadcastReceiver mReceiver2 = new BroadcastReceiver() {
