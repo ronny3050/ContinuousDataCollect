@@ -130,6 +130,10 @@ public class Applications extends AccessibilityService {
                         e.printStackTrace();
                     }
 
+                new FileWriter().addData(filePath, FileWriter.DATA_TYPE.APPLICATIONS,
+                        new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(new Date())
+                        , jsonObject);
+
                 }
             }
 
