@@ -80,36 +80,40 @@ public class FileWriter {
     }
 
     private void initialializeDataFile(String fp) {
-        if(!new File(fp).exists()) {
-            JSONObject obj = new JSONObject();
-            try {
-                JSONObject datObj = new JSONObject();
-                for (int i = 0; i < DATA_TYPE.values().length; i++) {
-                    datObj.put(DATA_TYPE.values()[i].toString(), new JSONArray());
+        if(fp != null) {
+            if (!new File(fp).exists()) {
+                JSONObject obj = new JSONObject();
+                try {
+                    JSONObject datObj = new JSONObject();
+                    for (int i = 0; i < DATA_TYPE.values().length; i++) {
+                        datObj.put(DATA_TYPE.values()[i].toString(), new JSONArray());
+                    }
+                    obj.put("Data", datObj);
+                } catch (JSONException e) {
+                    e.printStackTrace();
                 }
-                obj.put("Data", datObj);
-            } catch (JSONException e) {
-                e.printStackTrace();
+                writeToFile(fp, obj.toString());
             }
-            writeToFile(fp, obj.toString());
         }
     }
 
     public void addData(String fp, DATA_TYPE data_type, String date, JSONObject jsonObjectArg) {
+        if(fp != null) {
             initialializeDataFile(fp);
             JSONObject jsonObject = getAllData(fp);
 
             try {
-                    JSONObject data = jsonObject.getJSONObject("Data");
-                    JSONArray DataArr = data.getJSONArray(data_type.toString());
-                    DataArr.put(DataArr.length(), jsonObjectArg);
-                    data.put(data_type.toString(), DataArr);
-                    jsonObject.put("Data", data);
+                JSONObject data = jsonObject.getJSONObject("Data");
+                JSONArray DataArr = data.getJSONArray(data_type.toString());
+                DataArr.put(DataArr.length(), jsonObjectArg);
+                data.put(data_type.toString(), DataArr);
+                jsonObject.put("Data", data);
 
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
             writeToFile(fp, jsonObject.toString());
+        }
     }
 
     public JSONObject getAllData(String fp) {
